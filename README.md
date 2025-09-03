@@ -33,9 +33,16 @@ An **Elastic IP** is used to provide a stable public IP for the demo.
 6. 22 (SSH) from your IP or anywhere.
 7. 80 (HTTP) from Anywhere.
 8. Allocate an Elastic IP (so public IP stays fixed).
-9. Go to EC2 → Elastic IP → Allocate → Associate to your instance.
 
 <img width="1531" height="787" alt="5 0" src="https://github.com/user-attachments/assets/5a6a3429-0fc2-4652-885f-722402a8f49d" />
+
+9. Go to EC2 → Elastic IP → Allocate → Associate to your instance.
+
+<img width="1531" height="790" alt="6" src="https://github.com/user-attachments/assets/cb19a8e1-951d-468b-a9a9-cbc39fe9df8e" />
+
+10. SSH into your created EC2 Instance.
+
+<img width="1535" height="816" alt="5" src="https://github.com/user-attachments/assets/8dda714b-8368-4ae8-b587-2500f3fb9a43" />
 
 
 ### Part 2: Install Apache, PHP and MySQL
@@ -46,11 +53,19 @@ sudo systemctl enable apache2
 sudo systemctl start apache2
 ```
 
+<img width="1531" height="811" alt="7" src="https://github.com/user-attachments/assets/69f139c4-a372-4770-8743-3cd3884a1bc1" />
+
+<img width="1200" height="122" alt="8" src="https://github.com/user-attachments/assets/e71dfdca-c401-430f-909e-f3801b688d82" />
+
+
 ### Part 3: Create Vulnerable & Secure Login Pages
 ### 1. Create a vulnerable login (page1.html + login.php)
 ```bash
 sudo nano /var/www/html/page1.html
 ```
+
+<img width="695" height="138" alt="10" src="https://github.com/user-attachments/assets/98a87ba4-9540-4b51-8792-8b58433d3c9b" />
+
 
 ```html
 <!DOCTYPE html>
@@ -69,9 +84,15 @@ sudo nano /var/www/html/page1.html
 </html>
 ```
 
+<img width="876" height="375" alt="11" src="https://github.com/user-attachments/assets/5aefc13e-2770-47a0-9e76-16866d279ccd" />
+
+
 ```bash
 sudo nano /var/www/html/login.php
 ```
+
+<img width="672" height="594" alt="image" src="https://github.com/user-attachments/assets/f5c21903-91d8-47b1-89d9-5af6d613453f" />
+
 
 ```php
 <?php
@@ -105,11 +126,14 @@ if ($result && $result->num_rows > 0) {
 $conn->close();
 ?>
 ```
-### 2. Secure Login (page2.html + login_secyre.php)
+### 2. Secure Login (page2.html + login_secure.php)
 
 ```bash
 sudo nano /var/www/html/page2.html 
 ```
+
+<img width="671" height="326" alt="12" src="https://github.com/user-attachments/assets/88cd6cc4-d9b2-47aa-b8d7-c352915dab9e" />
+
 
 ```html
 <!DOCTYPE html>
@@ -129,6 +153,9 @@ sudo nano /var/www/html/page2.html
 ```bash
 sudo nano /var/www/html/login_secure.php
 ```
+
+<img width="634" height="648" alt="image" src="https://github.com/user-attachments/assets/dc21448c-0c78-4f40-b37c-54bbd15f77da" />
+
 
 ```php
 <?php
@@ -167,14 +194,22 @@ $conn->close();
 ```
 
 ### 3. Setup Database
+***Login to MySQL**
+
+```bash
+sudo mysql -u root -p
+```
 
 ```sql
 CREATE DATABASE testdb;
 USE testdb;
 CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50), password VARCHAR(50));
-INSERT INTO users (username,password) VALUES ('admin','admin123'), ('test','test123');
+INSERT INTO users (username,password) VALUES ('admin'), ('testuser');
 EXIT;
 ```
+
+<img width="796" height="503" alt="9" src="https://github.com/user-attachments/assets/b51995eb-7a2d-4c5d-931d-b02e84b4ca8f" />
+
 
 ### 4. Vulnerable Login Form
 - **URL (Exploitable):**  
