@@ -13,23 +13,16 @@ An **Elastic IP** is used to provide a stable public IP for the demo.
 
 ### Part 1: Spin up EC2 + Setup
 
-Launch EC2 Instance.
+1. Launch EC2 Instance.
+2. AWS Console → EC2 → Launch Instance.
 
-AWS Console → EC2 → Launch Instance.
-
-Choose Ubuntu 24 LTS AMI.
-
-Instance type: t3.micro (free tier).
-
-Configure security group:
-
-22 (SSH) from your IP or anywhere.
-
-80 (HTTP) from Anywhere.
-
-Allocate an Elastic IP (so public IP stays fixed):
-
-Go to EC2 → Elastic IP → Allocate → Associate to your instance.
+3. Choose Ubuntu 24 LTS AMI.
+4. Instance type: t3.micro (free tier).
+5. Configure security group.
+6. 22 (SSH) from your IP or anywhere.
+7. 80 (HTTP) from Anywhere.
+8. Allocate an Elastic IP (so public IP stays fixed).
+9. Go to EC2 → Elastic IP → Allocate → Associate to your instance.
 
 ### Part 2: Install Apache, PHP and MySQL
 ```bash
