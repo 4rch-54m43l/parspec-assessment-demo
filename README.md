@@ -12,9 +12,12 @@ An **Elastic IP** is used to provide a stable public IP for the demo.
 
 ### Part 1: Spin up EC2 + Setup
 
-Launch EC2 Instance
-AWS Console → EC2 → Launch Instance
-Choose Ubuntu 24 LTS AMI
+Launch EC2 Instance.
+
+AWS Console → EC2 → Launch Instance.
+
+Choose Ubuntu 24 LTS AMI.
+
 Instance type: t3.micro (free tier)
 Configure security group:
 22 (SSH) from your IP or anywhere
