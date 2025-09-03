@@ -313,6 +313,89 @@ sudo systemctl restart apache2
 
 **Tested through SQLmap**
 
-<img width="1898" height="913" alt="image" src="https://github.com/user-attachments/assets/e8ea2f98-0bfa-4301-9dd5-d7fd64c16002" />
+
+
+📌 SQL Injection Demo – Explanation
+===================================
+
+**What Happened in the Demo**
+-----------------------------
+
+1.  ✅ **Why it happened:** Because **user input was concatenated into SQL queries directly**, with no sanitization or parameterization.
+    
+    *   User input (username) from the login form was taken **directly** and inserted into a SQL query without validation.
+        
+    *   $sql = "SELECT \* FROM users WHERE username = '$user'";
+        
+    *   SELECT \* FROM users WHERE username = 'admin';
+        
+    *   admin' OR '1'='1The query became:SELECT \* FROM users WHERE username = 'admin' OR '1'='1';
+        
+    *   The condition '1'='1' is **always true**, so the query returned all rows.
+        
+    *   The application treated this as a valid login → attacker bypassed authentication.
+        
+2.  ✅ **Fix applied:** Sanitization & input escaping prevents malicious SQL fragments from being executed.
+    
+    *   In the secure version, input was sanitized using PHP’s real\_escape\_string().
+        
+    *   $user = $conn->real\_escape\_string($\_GET\['username'\]);$sql = "SELECT \* FROM users WHERE username = '$user'";
+        
+    *   SELECT \* FROM users WHERE username = 'admin\\' OR \\'1\\'=\\'1';
+        
+    *   Now the database interprets it as a literal string instead of SQL logic → query fails, attack blocked.
+        
+3.  ✅ **Fix applied:** WAF prevents SQL injection payloads from even reaching the PHP application.
+    
+    *   Even if developers miss sanitization, ModSecurity acts as a **shield at the web server level**.
+        
+    *   It scans incoming requests for malicious patterns.
+        
+    *   SecRule ARGS "(?i:union(\\s+all)?\\s+select)" \\ "id:1001,phase:2,deny,log,status:403,msg:'SQL Injection UNION SELECT blocked'"block requests containing UNION SELECT.
+        
+    *   OWASP CRS already includes signatures for common attacks like ' OR '1'='1, --, and #.
+        
+
+**Why It Happened**
+-------------------
+
+*   The root cause was **unsanitized user input** directly embedded into SQL queries.
+    
+*   Developers assumed input would always be safe, but attackers exploit this trust.
+    
+*   The vulnerable form had **no safeguards** → attacker could manipulate queries at will.
+    
+
+**How We Fixed It**
+-------------------
+
+1.  **At Code Level (login2.php)**
+    
+    *   Escaped user input with real\_escape\_string().
+        
+    *   Prevented malicious characters (', ", --, #) from altering queries.
+        
+    *   Ideally, parameterized queries (prepared statements) should be used for stronger protection.
+        
+2.  **At Infrastructure Level (ModSecurity WAF)**
+    
+    *   Deployed ModSecurity with OWASP Core Rule Set.
+        
+    *   Added custom rules to block SQLi keywords and patterns.
+        
+    *   Ensures protection even if developers miss something.
+        
+
+**Business Perspective**
+------------------------
+
+*   **Vulnerable Form Impact:** Anyone could log in as an admin without a password, leading to full system compromise.
+    
+*   **Protected Form Impact:** Attacks are blocked at multiple layers, reducing risk drastically.
+    
+*   **Lesson Learned:** Never trust user input. Always secure code, then reinforce with WAF.
+    
+
+✅ **Final Summary:**The SQL injection demo showed how insecure coding practices allow attackers to bypass authentication using simple payloads like ' OR '1'='1. This happened because input was directly embedded into SQL queries. We fixed it by escaping input in code and deploying **ModSecurity WAF with SQLi protection rules**, ensuring the application is no longer exploitable.
 
 
