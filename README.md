@@ -227,8 +227,7 @@ EXIT;
 <img width="1910" height="206" alt="14" src="https://github.com/user-attachments/assets/9acfb2cf-d74b-4212-931a-f4ca45eb7c84" />
 
   ```
-  []
-  ```
+  [http://13.204.177.235/login.php?username=admin' or '1' = '1]
 
 <img width="638" height="349" alt="16" src="https://github.com/user-attachments/assets/3ff77f4b-6f24-432a-922e-c6944d280b91" />
 
