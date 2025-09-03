@@ -2,8 +2,9 @@
 
 ## 📌 Project Overview
 This project demonstrates:
-1. A vulnerable PHP login form exploitable via SQL Injection.
-2. The same application secured using **ModSecurity WAF** with OWASP Core Rule Set and custom SQLi rules.
+1. Setting up an AWS EC2 Instance with LAPM stack
+2. A vulnerable PHP login form exploitable via SQL Injection.
+3. The same application secured using **ModSecurity WAF** with OWASP Core Rule Set and custom SQLi rules.
 
 The deployment is done on an **AWS EC2 Ubuntu 24 instance** with Apache, PHP and MySQL.  
 An **Elastic IP** is used to provide a stable public IP for the demo.
