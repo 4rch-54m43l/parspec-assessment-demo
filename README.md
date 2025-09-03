@@ -213,31 +213,60 @@ EXIT;
 
 ### 4. Vulnerable Login Form
 - **URL (Exploitable):**  
-  `http://13.204.177.235/page1.html`  
+  `http://13.204.177.235/page1.html`
 
-- **How to Exploit:**  
+  <img width="802" height="440" alt="13" src="https://github.com/user-attachments/assets/623beafc-895b-4efd-b546-40c5dd635389" />
+
+- **How to Exploit:**
+
+- Test presence of SQLi by putting "test'", it'll throw SQL error
+
+<img width="1910" height="206" alt="14" src="https://github.com/user-attachments/assets/9acfb2cf-d74b-4212-931a-f4ca45eb7c84" />
+
   ```
   http://13.204.177.235/login.php?username=admin' OR '1'='1
   ```
-  → Returns *Login successful* even without valid credentials.  
-  → Confirms SQL injection vulnerability.  
 
+<img width="638" height="349" alt="16" src="https://github.com/user-attachments/assets/3ff77f4b-6f24-432a-922e-c6944d280b91" />
+
+  → Returns *Login successfull* even without valid credentials.  
+
+<img width="528" height="329" alt="15" src="https://github.com/user-attachments/assets/b1936faf-0b3b-4569-9b20-43b207e6a7e6" />
+  
+  → Confirms SQL injection vulnerability.
+
+  **SQLmap also confirms the vulnerability**
+
+<img width="1886" height="902" alt="21" src="https://github.com/user-attachments/assets/bddfad87-0c54-44db-ab71-0837af245f98" />
+  
 
 ### Part 4: Install & Configure ModSecurity
 ### 1. Install ModSecurity from CLI
 
-```bahs
+```bash
 sudo apt install libapache2-mod-security2 -y
 sudo a2enmod security2
 ```
+<img width="740" height="193" alt="22" src="https://github.com/user-attachments/assets/5a0a2543-7635-4020-9f86-d92dd024295b" />
+
+<img width="1341" height="172" alt="23" src="https://github.com/user-attachments/assets/eb88ca0b-4a6e-48bb-9ab9-52afd5be83e8" />
+
+
 ###Enable blocking mode
 
 ```bash
 sudo cp /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf
 sudo nano /etc/modsecurity/modsecurity.conf
 ```
+
+<img width="1259" height="600" alt="25" src="https://github.com/user-attachments/assets/f3c8b6a7-7484-4789-9341-22cbce235953" />
+                                           **Set the rules**
+
 ***Make sure to set***
 ```SecRuleEngine On```
+
+<img width="834" height="910" alt="24" src="https://github.com/user-attachments/assets/d73acafc-4425-4412-a3b6-47e36608ea58" />
+
 
 ### 2. Enable OWASP CRS:
 
@@ -261,7 +290,10 @@ sudo systemctl restart apache2
 ```
 ### Part 5: Verify Mitigation and Protected Login Form
 - **URL (Non-Exploitable):**  
-  `http://13.204.177.235/page2.html`  
+  `http://13.204.177.235/page2.html`
+
+  <img width="555" height="295" alt="17" src="https://github.com/user-attachments/assets/e1f98bb1-7dd9-457b-8ce3-ef3b9e8558bc" />
+
 
 - **Mitigation Applied:**  
   - Installed **ModSecurity WAF** on Apache  
@@ -272,6 +304,15 @@ sudo systemctl restart apache2
   ```
   http://13.204.177.235/login_secure.php?username=admin' OR '1'='1
   ```
+
+  <img width="520" height="337" alt="19" src="https://github.com/user-attachments/assets/4acd43ad-f9a6-43bf-8025-9a3b5d5cccb5" />
+
   → Returns **Invalid Login** (blocked by ModSecurity).  
+
+<img width="564" height="336" alt="20" src="https://github.com/user-attachments/assets/0de17871-5054-4bb5-bcf5-4772b085f7ee" />
+
+**Tested through SQLmap**
+
+<img width="1898" height="913" alt="image" src="https://github.com/user-attachments/assets/e8ea2f98-0bfa-4301-9dd5-d7fd64c16002" />
 
 
