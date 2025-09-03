@@ -18,23 +18,31 @@ AWS Console → EC2 → Launch Instance.
 
 Choose Ubuntu 24 LTS AMI.
 
-Instance type: t3.micro (free tier)
+Instance type: t3.micro (free tier).
+
 Configure security group:
-22 (SSH) from your IP or anywhere
-80 (HTTP) from Anywhere
+
+22 (SSH) from your IP or anywhere.
+
+80 (HTTP) from Anywhere.
+
 Allocate an Elastic IP (so public IP stays fixed):
-Go to EC2 → Elastic IP → Allocate → Associate to your instance
+
+Go to EC2 → Elastic IP → Allocate → Associate to your instance.
 
 ### Part 2: Install Apache, PHP and MySQL
+```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install apache2 mysql-server php libapache2-mod-php git -y
 sudo systemctl enable apache2
 sudo systemctl start apache2
+```
 
 ### Part 3: Create Vulnerable & Secure Login Pages
 ### 1. Create a vulnerable login (page1.html + login.php)
-
+```bash
 sudo nano /var/www/html/page1.html
+```
 
 ```html
 <!DOCTYPE html>
@@ -53,7 +61,9 @@ sudo nano /var/www/html/page1.html
 </html>
 ```
 
+```bash
 sudo nano /var/www/html/login.php
+```
 
 ```php
 <?php
@@ -89,7 +99,9 @@ $conn->close();
 ```
 ### 2. Secure Login (page2.html + login_secyre.php)
 
+```bash
 sudo nano /var/www/html/page2.html 
+```
 
 ```html
 <!DOCTYPE html>
@@ -106,7 +118,9 @@ sudo nano /var/www/html/page2.html
 </body>
 </html>
 ```
+```bash
 sudo nano /var/www/html/login_secure.php
+```
 
 ```php
 <?php
@@ -146,11 +160,13 @@ $conn->close();
 
 ### 3. Setup Database
 
+```sql
 CREATE DATABASE testdb;
 USE testdb;
 CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50), password VARCHAR(50));
 INSERT INTO users (username,password) VALUES ('admin','admin123'), ('test','test123');
 EXIT;
+```
 
 ### 4. Vulnerable Login Form
 - **URL (Exploitable):**  
@@ -166,30 +182,40 @@ EXIT;
 
 ### Part 4: Install & Configure ModSecurity
 ### 1. Install ModSecurity from CLI
+
+```bahs
 sudo apt install libapache2-mod-security2 -y
 sudo a2enmod security2
-
+```
 ###Enable blocking mode
+
+```bash
 sudo cp /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf
 sudo nano /etc/modsecurity/modsecurity.conf
-
+```
 ***Make sure to set***
 ```SecRuleEngine On```
 
 ### 2. Enable OWASP CRS:
+
+```bash
 cd /etc/modsecurity
 sudo git clone https://github.com/coreruleset/coreruleset.git
 sudo mv coreruleset /usr/share/modsecurity-crs
 cd /usr/share/modsecurity-crs
 sudo cp crs-setup.conf.example crs-setup.conf
+```
 
 ### 3. Update Apache config:
+```bash
 IncludeOptional /usr/share/modsecurity-crs/crs-setup.conf
 IncludeOptional /usr/share/modsecurity-crs/rules/*.conf
+```
 
 ### 4. Restart Apache server
+```bash
 sudo systemctl restart apache2
-
+```
 ### Part 5: Verify Mitigation and Protected Login Form
 - **URL (Non-Exploitable):**  
   `http://13.204.177.235/page2.html`  
