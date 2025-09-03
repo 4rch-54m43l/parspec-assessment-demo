@@ -15,7 +15,6 @@ An **Elastic IP** is used to provide a stable public IP for the demo.
 
 1. Launch EC2 Instance.
 2. AWS Console → EC2 → Launch Instance.
-
 3. Choose Ubuntu 24 LTS AMI.
 4. Instance type: t3.micro (free tier).
 5. Configure security group.
@@ -23,6 +22,9 @@ An **Elastic IP** is used to provide a stable public IP for the demo.
 7. 80 (HTTP) from Anywhere.
 8. Allocate an Elastic IP (so public IP stays fixed).
 9. Go to EC2 → Elastic IP → Allocate → Associate to your instance.
+
+<img width="1535" height="805" alt="3" src="https://github.com/user-attachments/assets/7fafd545-08bc-491e-97ad-70b97876d317" />
+
 
 ### Part 2: Install Apache, PHP and MySQL
 ```bash
