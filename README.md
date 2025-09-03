@@ -14,16 +14,28 @@ An **Elastic IP** is used to provide a stable public IP for the demo.
 ### Part 1: Spin up EC2 + Setup
 
 1. Launch EC2 Instance.
+
+<img width="1525" height="816" alt="1" src="https://github.com/user-attachments/assets/439cc47e-0168-41a2-8cda-bb9fb02b50ea" />
+
 2. AWS Console → EC2 → Launch Instance.
 3. Choose Ubuntu 24 LTS AMI.
+
+<img width="1535" height="815" alt="2" src="https://github.com/user-attachments/assets/b8b307e6-459a-4abb-b3b1-0639291bdefe" />
+
 4. Instance type: t3.micro (free tier).
+
+<img width="1535" height="805" alt="3" src="https://github.com/user-attachments/assets/43207446-64a3-41c5-871e-11d2d3d8b26a" />
+
 5. Configure security group.
+
+<img width="1535" height="815" alt="4" src="https://github.com/user-attachments/assets/7429947c-e0d3-42ea-a4fd-cdec66beb93e" />
+
 6. 22 (SSH) from your IP or anywhere.
 7. 80 (HTTP) from Anywhere.
 8. Allocate an Elastic IP (so public IP stays fixed).
 9. Go to EC2 → Elastic IP → Allocate → Associate to your instance.
 
-<img width="1535" height="805" alt="3" src="https://github.com/user-attachments/assets/7fafd545-08bc-491e-97ad-70b97876d317" />
+<img width="1531" height="787" alt="5 0" src="https://github.com/user-attachments/assets/5a6a3429-0fc2-4652-885f-722402a8f49d" />
 
 
 ### Part 2: Install Apache, PHP and MySQL
