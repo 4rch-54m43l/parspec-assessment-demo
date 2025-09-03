@@ -1,5 +1,8 @@
 # Parspec SQL Injection Demo with ModSecurity Mitigation
 
+**At the end of this Readme, I have explained the bug and how to protect it in theory. To know more about SQLi and how to defend it in detail, please check the link below**
+[https://github.com/4rch-54m43l/parspec-assessment-demo/blob/main/SQLi-%20In%20Detail.md]
+
 ## 📌 Project Overview
 This project demonstrates:
 1. Setting up an AWS EC2 Instance with LAPM stack
@@ -213,7 +216,7 @@ EXIT;
 
 ### 4. Vulnerable Login Form
 - **URL (Exploitable):**  
-  `http://13.204.177.235/page1.html`
+  [http://13.204.177.235/page1.html]
 
   <img width="802" height="440" alt="13" src="https://github.com/user-attachments/assets/623beafc-895b-4efd-b546-40c5dd635389" />
 
@@ -224,7 +227,7 @@ EXIT;
 <img width="1910" height="206" alt="14" src="https://github.com/user-attachments/assets/9acfb2cf-d74b-4212-931a-f4ca45eb7c84" />
 
   ```
-  http://13.204.177.235/login.php?username=admin' OR '1'='1
+  []
   ```
 
 <img width="638" height="349" alt="16" src="https://github.com/user-attachments/assets/3ff77f4b-6f24-432a-922e-c6944d280b91" />
@@ -290,7 +293,7 @@ sudo systemctl restart apache2
 ```
 ### Part 5: Verify Mitigation and Protected Login Form
 - **URL (Non-Exploitable):**  
-  `http://13.204.177.235/page2.html`
+  [http://13.204.177.235/page2.html]
 
   <img width="555" height="295" alt="17" src="https://github.com/user-attachments/assets/e1f98bb1-7dd9-457b-8ce3-ef3b9e8558bc" />
 
@@ -302,7 +305,7 @@ sudo systemctl restart apache2
 
 - **Result:**  
   ```
-  http://13.204.177.235/login_secure.php?username=admin' OR '1'='1
+  [http://13.204.177.235/login_secure.php?username=admin%27%20OR%20%271%27=%271]
   ```
 
   <img width="520" height="337" alt="19" src="https://github.com/user-attachments/assets/4acd43ad-f9a6-43bf-8025-9a3b5d5cccb5" />
